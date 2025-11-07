@@ -1,0 +1,7 @@
+apiVersion: v2
+name: learnerreport
+description: Helm chart to deploy a MERN app (frontend + backend) with optional ingress and HPAs
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+kubeVersion: ">=1.23.0-0"

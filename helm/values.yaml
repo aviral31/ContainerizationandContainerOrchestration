@@ -1,0 +1,99 @@
+#Global settings
+nameOverride: ""
+fullnameOverride: ""
+
+image:
+repositoryFrontend: 975050024946.dkr.ecr.ca-central-1.amazonaws.com/aviral/learnerreport-frontend:latest
+repositoryBackend: 975050024946.dkr.ecr.ca-central-1.amazonaws.com/aviral/learnerreport-backend:latest
+tag: latest
+pullPolicy: IfNotPresent
+pullSecrets: [] # e.g. ["my-regcred"]
+
+replicaCount:
+frontend: 1
+backend: 1
+
+service:
+frontend:
+type: ClusterIP
+port: 80
+targetPort: 3000
+backend:
+type: ClusterIP
+port: 3001
+targetPort: 3001
+
+ingress:
+enabled: true
+className: nginx
+annotations: {}
+tls:
+enabled: false
+
+resources:
+frontend:
+requests:
+cpu: 100m
+memory: 128Mi
+limits:
+cpu: 500m
+memory: 512Mi
+backend:
+requests:
+cpu: 200m
+memory: 256Mi
+limits:
+cpu: "1"
+memory: 1Gi
+
+env:
+backend:
+NODE_ENV: production
+# MONGO_URI will come from Secret; override default below if you want
+# EXTRA_ENV:
+# SOME_KEY: some-value
+frontend:
+# put FE envs if needed (served by node/nginx based on your image)
+# REACT_APP_API_BASE: /api
+
+probes:
+frontend:
+liveness:
+path: /
+initialDelaySeconds: 20
+periodSeconds: 10
+readiness:
+path: /
+initialDelaySeconds: 5
+periodSeconds: 5
+backend:
+liveness:
+path: /api/health
+initialDelaySeconds: 10
+periodSeconds: 10
+readiness:
+path: /api/health
+initialDelaySeconds: 5
+periodSeconds: 5
+
+hpa:
+frontend:
+enabled: false
+minReplicas: 1
+maxReplicas: 3
+targetCPUUtilizationPercentage: 60
+backend:
+enabled: false
+minReplicas: 1
+maxReplicas: 3
+targetCPUUtilizationPercentage: 60
+
+secrets:
+mongoUri: "mongodb+srv://aviralpaliwal007_db_user:QeNOdZvaeQd18qfz@learnerreport.mzaesir.mongodb.net/users?retryWrites=true&w=majority"
+
+podAnnotations: {}
+podLabels: {}
+
+nodeSelector: {}
+tolerations: []
+affinity: {}

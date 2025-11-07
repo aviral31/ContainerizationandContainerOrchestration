@@ -1,0 +1,20 @@
+# Docker Compose for Learner Report Application (using MongoDB Atlas)
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "3001:3001"
+    env_file:
+      - ./backend/.env
+    environment:
+      - MONGO_URI=mongodb+srv://aviralpaliwal007_db_user:QeNOdZvaeQd18qfz@learnerreport.mzaesir.mongodb.net/users?retryWrites=true&w=majority
+      - PORT=3001
+    depends_on:
+      - frontend
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=http://localhost:3001

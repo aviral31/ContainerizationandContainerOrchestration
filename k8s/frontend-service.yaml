@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: learner-frontend-svc
+spec:
+  selector:
+    app: learner-frontend
+  ports:
+    - port: 80
+      targetPort: 3000
+      protocol: TCP
+      name: http
+  type: ClusterIP

@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+name: {{ include "learnerreport.fullname" . }}-frontend
+labels:
+{{- include "learnerreport.labels" . | nindent 4 }}
+spec:
+replicas: {{ .Values.replicaCount.frontend }}
+selector:
+matchLabels:
+app: {{ include "learnerreport.fullname" . }}-frontend
+template:
+metadata:
+labels:
+app: {{ include "learnerreport.fullname" . }}-frontend
+{{- with .Values.podLabels }}
+{{- toYaml . | nindent 8 }}
+{{- end }}
+{{- with .Values.podAnnotations }}
+annotations:
+{{- toYaml . | nindent 8 }}
+{{- end }}
+spec:
+{{- if .Values.image.pullSecrets }}
+imagePullSecrets:
+{{- range .Values.image.pullSecrets }}
+- name: {{ . }}
+{{- end }}
+{{- end }}
+containers:
+- name: frontend
+image: "{{ .Values.image.repositoryFrontend }}:{{ .Values.image.tag }}"
+imagePullPolicy: {{ .Values.image.pullPolicy }}
+ports:
+- containerPort: {{ .Values.service.frontend.targetPort }}
+livenessProbe:
+httpGet:
+path: {{ .Values.probes.frontend.liveness.path }}
+port: {{ .Values.service.frontend.targetPort }}
+initialDelaySeconds: {{ .Values.probes.frontend.liveness.initialDelaySeconds }}
+periodSeconds: {{ .Values.probes.frontend.liveness.periodSeconds }}
+readinessProbe:
+httpGet:
+path: {{ .Values.probes.frontend.readiness.path }}
+port: {{ .Values.service.frontend.targetPort }}
+initialDelaySeconds: {{ .Values.probes.frontend.readiness.initialDelaySeconds }}
+periodSeconds: {{ .Values.probes.frontend.readiness.periodSeconds }}
+resources:
+requests:
+{{- toYaml .Values.resources.frontend.requests | nindent 12 }}
+limits:
+{{- toYaml .Values.resources.frontend.limits | nindent 12 }}
+env:
+{{- range $k, $v := .Values.env.frontend }}
+- name: {{ $k }}
+value: {{ $v | quote }}
+{{- end }}

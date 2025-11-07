@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+name: {{ include "learnerreport.fullname" . }}-backend
+labels:
+{{- include "learnerreport.labels" . | nindent 4 }}
+spec:
+replicas: {{ .Values.replicaCount.backend }}
+selector:
+matchLabels:
+app: {{ include "learnerreport.fullname" . }}-backend
+template:
+metadata:
+labels:
+app: {{ include "learnerreport.fullname" . }}-backend
+{{- with .Values.podLabels }}
+{{- toYaml . | nindent 8 }}
+{{- end }}
+{{- with .Values.podAnnotations }}
+annotations:
+{{- toYaml . | nindent 8 }}
+{{- end }}
+spec:
+{{- if .Values.image.pullSecrets }}
+imagePullSecrets:
+{{- range .Values.image.pullSecrets }}
+- name: {{ . }}
+{{- end }}
+{{- end }}
+containers:
+- name: backend
+image: "{{ .Values.image.repositoryBackend }}:{{ .Values.image.tag }}"
+imagePullPolicy: {{ .Values.image.pullPolicy }}
+ports:
+- containerPort: {{ .Values.service.backend.targetPort }}
+env:
+- name: NODE_ENV
+value: {{ .Values.env.backend.NODE_ENV | quote }}
+- name: MONGO_URI
+valueFrom:
+secretKeyRef:
+name: {{ include "learnerreport.fullname" . }}-secrets
+key: mongo_uri
+{{- if .Values.env.backend.EXTRA_ENV }}
+{{- range $k, $v := .Values.env.backend.EXTRA_ENV }}
+- name: {{ $k }}
+value: {{ $v | quote }}
+{{- end }}
+{{- end }}
+livenessProbe:
+httpGet:
+path: {{ .Values.probes.backend.liveness.path }}
+port: {{ .Values.service.backend.targetPort }}
+initialDelaySeconds: {{ .Values.probes.backend.liveness.initialDelaySeconds }}
+periodSeconds: {{ .Values.probes.backend.liveness.periodSeconds }}
+readinessProbe:
+httpGet:
+path: {{ .Values.probes.backend.readiness.path }}
+port: {{ .Values.service.backend.targetPort }}
+initialDelaySeconds: {{ .Values.probes.backend.readiness.initialDelaySeconds }}
+periodSeconds: {{ .Values.probes.backend.readiness.periodSeconds }}
+resources:
+requests:
+{{- toYaml .Values.resources.backend.requests | nindent 12 }}
+limits:
+{{- toYaml .Values.resources.backend.limits | nindent 12 }}

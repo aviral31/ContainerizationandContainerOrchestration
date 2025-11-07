@@ -1,5 +1,5 @@
 import React,{useEffect,useState,useContext} from 'react'
-import Avatar from '@material-ui/core/Avatar';
+import { Avatar } from '@mui/material';
 import { Card, CardContent, Typography, Container, Grid } from "@mui/material";
 import { Box } from "@mui/system";
 import DataContext from '../../context/DataContext';
