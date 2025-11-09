@@ -7,11 +7,6 @@ A full-stack application for managing and tracking student progress, built with 
 ## Features
 
 - 🔐 User Authentication & Role-based Access
-- 📊 Student Dashboard
-- 👨‍🏫 Faculty Management
-- 📝 Question Upload System
-- 📅 Attendance Tracking
-- 🎯 Career Services Integration
 
 ## Tech Stack
 
@@ -116,25 +111,6 @@ docker-compose up
 ### Login Page
 ![Login Page](placeholder_for_login_screenshot.png)
 
-### Student Dashboard
-![Student Dashboard](placeholder_for_student_dashboard.png)
-
-### Faculty Dashboard
-![Faculty Dashboard](placeholder_for_faculty_dashboard.png)
-
-### Question Upload Interface
-![Question Upload](placeholder_for_question_upload.png)
-
-## API Documentation
-
-The backend API provides the following endpoints:
-
-- `/student` - Student-related operations
-- `/admin` - Administrative functions
-- `/faculty` - Faculty management
-- `/careerService` - Career service integrations
-- `/attendance` - Attendance tracking
-
 For detailed API documentation, refer to the [API Documentation](placeholder_for_api_docs_link)
 
 ## Contributing
@@ -155,6 +131,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Minimal UI Kit
 - Original project inspiration from [UnpredictablePrashant/learnerReportCS_frontend](https://github.com/UnpredictablePrashant/learnerReportCS_frontend)
 
-## Contact
+## Note
 
-Project Link: [https://github.com/aviral31/ContainerizationandContainerOrchestration](https://github.com/aviral31/ContainerizationandContainerOrchestration)
+All APIs are not available due to issues in code
