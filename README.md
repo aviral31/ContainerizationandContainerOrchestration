@@ -35,6 +35,8 @@ A full-stack application for managing and tracking student progress, built with 
 │   ├── models/
 │   ├── routes/
 │   └── ...
+├── helm
+├── k8s
 ├──Jenkinsfile
 ├──docker-compose.yml
 ```
