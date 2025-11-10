@@ -2,8 +2,6 @@
 
 A full-stack application for managing and tracking student progress, built with React, Node.js, and MongoDB.
 
-![Application Overview](placeholder_for_app_overview_screenshot.png)
-
 ## Features
 
 - 🔐 User Authentication & Role-based Access
@@ -37,6 +35,8 @@ A full-stack application for managing and tracking student progress, built with 
 │   ├── models/
 │   ├── routes/
 │   └── ...
+├──Jenkinsfile
+├──docker-compose.yml
 ```
 
 ## Prerequisites
@@ -105,13 +105,6 @@ Build and run the containers using docker-compose:
 ```bash
 docker-compose up
 ```
-
-## Application Screenshots
-
-### Login Page
-![Login Page](placeholder_for_login_screenshot.png)
-
-For detailed API documentation, refer to the [API Documentation](placeholder_for_api_docs_link)
 
 ## Contributing
 
